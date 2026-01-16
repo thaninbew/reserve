@@ -1,0 +1,100 @@
+# Copilot Instructions - Estate Manager
+
+## Tech Stack
+Refer to `tech_stack.md` for complete stack details. Use pnpm
+
+## Core Principles
+- **Security first**: Validate all inputs, sanitize data, use Zod schemas, implement proper auth checks.
+- **Type safety**: Leverage TypeScript strictly, no `any` types, share types between client/server.
+- **Performance**: Server components by default, client components only when needed, optimize images, lazy load heavy components.
+- **Database**: Use Prisma for all DB operations, leverage relations, use transactions for multi-step operations.
+
+## Response Style
+- Be concise: Short functions, avoid verbosity.
+- Prioritize: Speed > Features > Polish (iterate later).
+- When uncertain: Suggest options with pros/cons.
+- No: Hallucinated APIs, insecure code, over-engineering.
+
+## Code Standards
+- Full-stack: Align frontend/backend (shared types).
+- For debugging: Propose fixes with root cause analysis.
+- Commits: Conventional commits (feat:, fix:, chore:); descriptive messages.
+
+## Testing & Quality
+- Generate tests alongside code: unit, integration where applicable.
+- Prioritize TDD: Suggest tests before implementation.
+- Performance: Memoize, lazy load, avoid unnecessary re-renders.
+- Edge cases: Handle null/undefined, network failures, invalid inputs.
+
+## Always Include
+- Inline comments for complex logic.
+- Error handling (try-catch, proper HTTP codes).
+- Unit tests (Jest/Vitest) with 80%+ coverage.
+- For APIs: Include DTOs, validation pipes, proper error responses.
+- For components: Accessibility (ARIA), responsive design, memoization.
+
+## Next.js Specific
+- Use App Router conventions (Server Actions, route handlers).
+- Implement proper loading/error states.
+- Use `searchParams` for filters, not client state.
+- Server Components: Fetch data directly, no useEffect.
+- Client Components: Mark with 'use client', keep minimal.
+
+## State Management
+- Server state: React Query (useQuery, useMutation).
+- Global state: Zustand stores (granular, small stores).
+- Form state: React Hook Form + Zod validation.
+- URL state: searchParams for shareable filters.
+
+## Database Patterns
+- Always use indexes for foreign keys and frequently queried fields.
+- Use `select` to limit returned fields, avoid over-fetching.
+- Implement soft deletes for important records.
+- Use `@@unique` constraints to prevent duplicates.
+
+## API Routes
+- Validate request bodies with Zod before processing.
+- Return consistent error shapes: `{ error: string, code?: string }`.
+- Use proper HTTP status codes (200, 201, 400, 401, 403, 404, 500).
+- Implement rate limiting for sensitive endpoints.
+
+## Security Practices
+- Never expose sensitive data in client components.
+- Use server actions for mutations, not client-side fetch.
+- Sanitize file uploads, validate MIME types and sizes.
+- Implement CSRF protection via NextAuth.
+- Use environment variables for secrets, never hardcode.
+
+## File Organization
+- Colocate related files (component + styles + tests).
+- Use barrel exports (index.ts) for cleaner imports.
+- Keep components under 200 lines; split if larger.
+- Separate business logic into `lib/` utilities.
+
+## Performance Optimization
+- Use `next/image` for all images with proper sizing.
+- Implement pagination for large lists (use cursor-based).
+- Debounce search inputs, throttle scroll handlers.
+- Use React.memo for expensive pure components.
+- Prefer CSS over JS animations.
+
+## Accessibility
+- Semantic HTML (nav, main, article, section).
+- Proper heading hierarchy (h1 → h2 → h3).
+- Keyboard navigation (focus styles, tab order).
+- ARIA labels for icon buttons and dynamic content.
+- Color contrast minimum 4.5:1.
+
+## Error Handling
+- User-facing errors: Clear, actionable messages.
+- Log server errors with context (user ID, timestamp, stack).
+- Use error boundaries for component errors.
+- Implement retry logic for network failures.
+- Fallback UI for failed data fetches.
+
+## What NOT to Do
+- Don't use Context for frequently updating values (use Zustand).
+- Don't fetch in useEffect (use Server Components or React Query).
+- Don't store derived state (compute from existing state).
+- Don't use `localStorage` for sensitive data (use httpOnly cookies).
+- Don't ignore TypeScript errors (fix them, don't suppress).
