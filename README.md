@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# reserve
+
+A modern property management platform for families and small property owners to centralize holdings, collaborate effectively, and maintain complete operational control.
+
+## Overview
+
+Reserve provides a unified system for managing property portfolios. Track multiple properties, organize documents, coordinate with family members, and maintain real-time visibility across your entire estate—all in one place.
+
+## Core Features
+
+- **Property Dashboard**: Portfolio overview with values, status, and key metrics
+- **Interactive Map**: Visualize properties with color-coded markers and navigation
+- **Document Management**: Centralize leases, deeds, insurance, and inspection logs
+- **Family Collaboration**: Role-based access with property manager assignments
+- **Activity Timeline**: Complete audit trail of all actions
+- **Mobile-First**: On-site access for inspections and uploads
+
+## Use Cases
+
+- **Multi-Property Management**: Coordinate oversight across rental, vacation, and family properties
+- **Family Portfolios**: Shared visibility and task assignment between family members
+- **Estate Planning**: Maintain current records for seamless succession
+- **Rental Operations**: Track leases, tenants, and property maintenance
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, TypeScript, Tailwind CSS, shadcn/ui
+- **State**: Zustand, React Query
+- **Backend**: Prisma ORM, PostgreSQL, NextAuth.js
+- **Storage**: Supabase
+- **Maps**: Leaflet
+
+See `tech_stack.md` for details.
 
 ## Getting Started
-
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local
+pnpm prisma generate && pnpm prisma db push
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development Status
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🚧 MVP in progress
 
-## Learn More
+**Post-MVP:**
+- Rental & financial tracking
+- Alerts & notifications
+- Tenant portal
+- GPS inspection logging
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary
