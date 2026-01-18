@@ -1,11 +1,10 @@
 # reserve
-```
-                                              
-oooo d8b   .ooooo.    .oooo.o   .ooooo.    oooo d8b oo    ooo  .ooooo.  
- `888""8P  d88' `88b  d88(  "8  d88' `88b   `888 " "8P `88.  .8'   d88'    `88b 
-  888      888ooo888  `"Y88b.   888ooo888  888         `88  .8'   888ooo888 
-  888      888          .o  o.  )88b  888    .o       888          `888'     888    .o 
-d888b     `Y8bod8P'  8""888P'  `Y8bod8P'   d888b         `8'      `Y8bod8P' 
+```                                                         
+oooo d8b  .ooooo.   .oooo.o  .ooooo.  oooo d8b oooo    ooo  .ooooo.  
+`888""8P d88' `88b d88(  "8 d88' `88b `888""8P  `88.  .8'  d88' `88b 
+ 888     888ooo888 `"Y88b.  888ooo888  888       `88..8'   888ooo888 
+ 888     888    .o o.  )88b 888    .o  888        `888'    888    .o 
+d888b    `Y8bod8P' 8""888P' `Y8bod8P' d888b        `8'     `Y8bod8P' 
 ```
 A modern property management platform for families and small property owners to centralize holdings, collaborate effectively, and maintain complete operational control.
 
