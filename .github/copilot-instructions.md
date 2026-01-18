@@ -3,6 +3,11 @@
 ## Tech Stack
 Refer to `tech_stack.md` for complete stack details. Use pnpm
 
+## Package Installation
+- **Always install packages via terminal**: Use `pnpm add <package>` or `pnpm add -D <package>` for dev dependencies.
+- **Never manually edit package.json**: Let package managers handle dependency management.
+- Use `pnpm install` to sync dependencies after pulling code with changes to `pnpm-lock.yaml`.
+
 ## Core Principles
 - **Security first**: Validate all inputs, sanitize data, use Zod schemas, implement proper auth checks.
 - **Type safety**: Leverage TypeScript strictly, no `any` types, share types between client/server.
@@ -13,7 +18,8 @@ Refer to `tech_stack.md` for complete stack details. Use pnpm
 - Be concise: Short functions, avoid verbosity.
 - Prioritize: Speed > Features > Polish (iterate later).
 - When uncertain: Suggest options with pros/cons.
-- No: Hallucinated APIs, insecure code, over-engineering.
+- **Component priority**: Use shadcn/ui components before creating custom components. Check existing shadcn components first.
+- No: Hallucinated APIs, insecure code, over-engineering, custom components when shadcn alternatives exist.
 
 ## Code Standards
 - Full-stack: Align frontend/backend (shared types).
@@ -31,7 +37,8 @@ Refer to `tech_stack.md` for complete stack details. Use pnpm
 - Error handling (try-catch, proper HTTP codes).
 - Unit tests (Jest/Vitest) with 80%+ coverage.
 - For APIs: Include DTOs, validation pipes, proper error responses.
-- For components: Accessibility (ARIA), responsive design, memoization.
+- For components: Use shadcn/ui components when available; accessibility (ARIA), responsive design, memoization.
+- **shadcn/ui**: Prefer pre-built shadcn components over custom implementations. Install via `npx shadcn-ui@latest add <component-name>`.
 
 ## Next.js Specific
 - Use App Router conventions (Server Actions, route handlers).
