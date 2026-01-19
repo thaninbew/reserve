@@ -98,13 +98,29 @@ export async function registerAction(values: unknown) {
   const isFirstUser = (await prisma.user.count()) === 0;
   const passwordHash = await hash(password, 12);
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      passwordHash,
-      role: isFirstUser ? "OWNER" : "VIEWER",
-    },
+  await prisma.$transaction(async (tx) => {
+    const user = await tx.user.create({
+      data: {
+        name,
+        email,
+        passwordHash,
+        role: isFirstUser ? "OWNER" : "VIEWER",
+      },
+    });
+
+    const reserve = await tx.reserve.create({
+      data: {
+        name: `${name || "My"}'s Reserve`,
+      },
+    });
+
+    await tx.userReserve.create({
+      data: {
+        userId: user.id,
+        reserveId: reserve.id,
+        role: "OWNER",
+      },
+    });
   });
 
   const verificationToken = await generateVerificationToken(email);

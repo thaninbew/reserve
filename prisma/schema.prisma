@@ -32,6 +32,7 @@ model User {
 
   accounts      Account[]
   sessions      Session[]
+  reserves      UserReserve[]
 
   @@index([role])
 }
@@ -65,6 +66,33 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Reserve {
+  id        String        @id @default(cuid())
+  name      String
+  // slug      String        @unique // URL friendly identifier - keep simple for MVP
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  users     UserReserve[]
+}
+
+model UserReserve {
+  id        String   @id @default(cuid())
+  userId    String
+  reserveId String
+  role      UserRole @default(VIEWER)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reserve Reserve @relation(fields: [reserveId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, reserveId])
+  @@index([userId])
+  @@index([reserveId])
 }
 
 model VerificationToken {
