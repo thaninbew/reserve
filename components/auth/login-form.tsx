@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { loginAction } from "@/lib/actions/auth";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
 import { AuthCard } from "@/components/auth/auth-card";
+import { Social } from "@/components/auth/social";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +19,7 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<LoginInput>({
@@ -30,6 +32,7 @@ export function LoginForm() {
 
   const onSubmit = form.handleSubmit((values) => {
     setError(null);
+    setSuccess(null);
     startTransition(async () => {
       const result = await loginAction({
         ...values,
@@ -37,6 +40,10 @@ export function LoginForm() {
       });
       if (result?.error) {
         setError(result.error);
+        form.resetField("password");
+      }
+      if (result?.success) {
+        setSuccess(result.success);
       }
     });
   });
@@ -46,15 +53,23 @@ export function LoginForm() {
       title="Welcome back"
       description="Sign in to manage your properties."
       footer={
-        <span>
-          New here?{" "}
-          <Link
-            className="font-medium text-zinc-900 hover:underline dark:text-zinc-50"
-            href="/register"
+        <div className="flex flex-col gap-4 text-center">
+            <span>
+            New here?{" "}
+            <Link
+                className="font-medium text-zinc-900 hover:underline dark:text-zinc-50"
+                href="/register"
+            >
+                Create an account
+            </Link>
+            </span>
+             <Link
+            className="text-sm text-zinc-500 hover:underline"
+            href="/reset"
           >
-            Create an account
+            Forgot password?
           </Link>
-        </span>
+        </div>
       }
     >
       <form onSubmit={onSubmit} className="space-y-5">
@@ -65,6 +80,7 @@ export function LoginForm() {
             type="email"
             autoComplete="email"
             {...form.register("email")}
+            disabled={isPending}
           />
           {form.formState.errors.email?.message ? (
             <p className="text-xs text-red-500">
@@ -80,6 +96,7 @@ export function LoginForm() {
             type="password"
             autoComplete="current-password"
             {...form.register("password")}
+            disabled={isPending}
           />
           {form.formState.errors.password?.message ? (
             <p className="text-xs text-red-500">
@@ -93,11 +110,24 @@ export function LoginForm() {
             {error}
           </p>
         ) : null}
+         {success ? (
+          <p role="alert" className="text-sm text-green-500">
+            {success}
+          </p>
+        ) : null}
 
         <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? "Signing in..." : "Sign in"}
         </Button>
       </form>
+      <div className="mt-4 flex w-full items-center gap-x-2">
+        <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+        <span className="text-xs text-zinc-500 uppercase">Or continue with</span>
+         <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+      </div>
+      <div className="mt-4">
+        <Social />
+      </div>
     </AuthCard>
   );
 }

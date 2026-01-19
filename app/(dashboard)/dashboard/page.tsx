@@ -1,4 +1,6 @@
 import { auth } from "@/lib/auth";
+import { logout } from "@/lib/actions/auth";
+import { Button } from "@/components/ui/button";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -6,7 +8,12 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-zinc-50 px-6 py-16 text-zinc-900 dark:bg-black dark:text-zinc-50">
       <div className="mx-auto w-full max-w-4xl space-y-4">
-        <h1 className="text-3xl font-semibold">Dashboard</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-semibold">Dashboard</h1>
+          <form action={logout}>
+             <Button variant="outline" size="sm">Sign out</Button>
+          </form>
+        </div>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
           Signed in as {session?.user?.email}
         </p>
