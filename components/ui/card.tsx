@@ -1,13 +1,42 @@
-import * as React from "react"
+"use client";
 
+import * as React from "react"
 import { cn } from "@/lib/utils"
 
 function Card({ className, ...props }: React.ComponentProps<"div">) {
+  const cardRef = React.useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Subtle rotation - divisors set high for subtlety
+    const rotateX = (y - centerY) / 80;
+    const rotateY = (centerX - x) / 80;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    cardRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+  };
+
   return (
     <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "bg-card/60 backdrop-blur-xl text-card-foreground flex flex-col gap-6 rounded-[2px] border border-[var(--border-subtle)] py-6 shadow-[0_10px_30px_rgba(142,111,62,0.05)] relative overflow-hidden transition-[var(--transition-smooth)] ease-out hover:border-[var(--gold-primary)] group",
         className
       )}
       {...props}

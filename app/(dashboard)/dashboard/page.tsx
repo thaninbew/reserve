@@ -1,13 +1,14 @@
 import { auth } from "@/lib/auth";
 import { logout } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreateReserveDialog } from "@/components/dashboard/create-reserve-dialog";
 import { JoinReserveDialog } from "@/components/dashboard/join-reserve-dialog";
 import { prisma } from "@/lib/prisma";
 
 export default async function DashboardPage() {
   const session = await auth();
-
+  
   // Fetch all reserves this user is part of
   const userReserves = await prisma.userReserve.findMany({
     where: {
@@ -22,13 +23,13 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="min-h-screen bg-zinc-50 px-6 py-16 text-zinc-900 dark:bg-black dark:text-zinc-50">
+    <div className="relative z-10 min-h-screen px-6 py-16 text-foreground font-sans">
       <div className="mx-auto w-full max-w-4xl space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold">Dashboard</h1>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
+            <p className="text-sm text-muted-foreground mt-1">
                Welcome back, {session?.user?.name || session?.user?.email}
             </p>
           </div>
@@ -38,37 +39,41 @@ export default async function DashboardPage() {
         </div>
 
         {/* Action Bar */}
-        <div className="flex items-center gap-4 border-b border-zinc-200 pb-6 dark:border-zinc-800">
+        <div className="flex items-center gap-4 border-b border-border/40 pb-6">
              <CreateReserveDialog />
              <JoinReserveDialog />
         </div>
 
         {/* Reserves List */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Your Reserves</h2>
+          <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">Your Reserves</h2>
           {userReserves.length === 0 ? (
-            <div className="rounded-xl border border-zinc-200 bg-white p-8 text-center shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-                <p className="text-zinc-500">You don't belong to any reserves yet. Create one to get started!</p>
-            </div>
+            <Card className="flex flex-col items-center justify-center py-12 text-center border-dashed">
+                <CardContent>
+                    <p className="text-muted-foreground">You don't belong to any reserves yet. Create one to get started!</p>
+                </CardContent>
+            </Card>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {userReserves.map((ur) => (
-                <div 
+                <Card 
                   key={ur.reserveId} 
-                  className="flex flex-col rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950"
+                  className="cursor-pointer group hover:border-[#c5a059]/50"
                 >
-                  <div className="mb-4">
-                    <h3 className="font-semibold text-lg">{ur.reserve.name}</h3>
-                    <span className="inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200">
-                      {ur.role}
-                    </span>
-                  </div>
-                  <div className="mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-800">
-                     <p className="text-xs text-zinc-400">
-                       Created {ur.reserve.createdAt.toLocaleDateString()}
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                        <CardTitle className="text-lg">{ur.reserve.name}</CardTitle>
+                        <span className="inline-flex items-center rounded-full bg-[#c5a059]/10 px-2 py-0.5 text-[10px] font-medium text-[#c5a059] uppercase tracking-wide">
+                        {ur.role}
+                        </span>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                     <p className="text-xs font-mono text-muted-foreground">
+                       EST. {ur.reserve.createdAt.toLocaleDateString()}
                      </p>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           )}

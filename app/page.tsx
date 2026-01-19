@@ -11,16 +11,16 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-zinc-50 px-6 py-20 text-zinc-900 dark:bg-black dark:text-zinc-50">
+    <div className="relative z-10 min-h-screen px-6 py-20 text-foreground">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-10 text-center">
         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <h1 className="text-sm font-semibold tracking-[0.2em] uppercase text-primary mb-2">
             Reserve
-          </p>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Estate management, simplified.
           </h1>
-          <p className="max-w-2xl text-base text-muted-foreground">
+          <p className="text-4xl font-semibold tracking-tight sm:text-5xl">
+            Estate management, simplified.
+          </p>
+          <p className="max-w-2xl text-base text-muted-foreground font-mono text-sm leading-relaxed">
             Organize properties, documents, and family roles in one secure
             workspace.
           </p>
